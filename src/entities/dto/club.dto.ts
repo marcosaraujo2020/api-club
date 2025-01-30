@@ -1,4 +1,4 @@
-import { Club } from './club.entity';
+import { Club } from '../club.entity';
 
 export class ClubDto {
   readonly id: string;

@@ -20,16 +20,4 @@ export class Club {
 
   @OneToMany(() => Player, (player) => player.club)
   players: Player[];
-
-  constructor(
-    name: string,
-    country: string,
-    uf: string,
-    year_foundation: number,
-  ) {
-    this.name = name;
-    this.country = country;
-    this.uf = uf;
-    this.year_foundation = year_foundation;
-  }
 }

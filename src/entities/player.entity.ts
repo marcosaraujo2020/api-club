@@ -1,4 +1,10 @@
-import { Column, PrimaryGeneratedColumn, ManyToOne, Entity } from 'typeorm';
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Entity,
+  JoinColumn,
+} from 'typeorm';
 import { Club } from './club.entity';
 
 @Entity()
@@ -18,18 +24,7 @@ export class Player {
   @Column()
   position: string;
 
-  @ManyToOne(() => Club, (club) => club.players, { eager: true })
+  @ManyToOne(() => Club, (club) => club.players)
+  @JoinColumn({ name: 'clubId' })
   club: Club;
-
-  constructor(
-    name: string,
-    age: number,
-    shirt_number: number,
-    position: string,
-  ) {
-    this.name = name;
-    this.age = age;
-    this.shirt_number = shirt_number;
-    this.position = position;
-  }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ClubDto } from 'src/entities/club.dto';
+import { ClubDto } from 'src/entities/dto/club.dto';
 import { Club } from 'src/entities/club.entity';
 import { Repository } from 'typeorm';
+import { CreateClubDto } from 'src/entities/dto/create-club.dto';
 
 @Injectable()
 export class ClubService {
@@ -16,8 +17,8 @@ export class ClubService {
     return clubs.map((club) => new ClubDto(club));
   }
 
-  async createClub(club: Club): Promise<Club> {
-    const createClub = await this.clubsRepository.save(club);
-    return createClub;
+  async createClub(createClubDto: CreateClubDto): Promise<Club> {
+    const club = this.clubsRepository.create(createClubDto);
+    return this.clubsRepository.save(club);
   }
 }

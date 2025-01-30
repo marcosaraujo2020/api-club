@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ClubDto } from 'src/entities/dto/club.dto';
+import { CreateClubDto } from 'src/entities/dto/create-club.dto';
 import { ClubService } from './club.service';
-import { Club } from 'src/entities/club.entity';
-import { Response } from 'express';
-import { ClubDto } from 'src/entities/club.dto';
 
 @Controller('clubs')
 export class ClubController {
@@ -22,8 +21,7 @@ export class ClubController {
   }
 
   @Post()
-  async createClub(@Res() response: Response, @Body() club: Club) {
-    const playerCreated = await this.clubService.createClub(club);
-    return response.status(201).json(playerCreated);
+  async createClub(@Body() createClubDto: CreateClubDto) {
+    return this.clubService.createClub(createClubDto);
   }
 }

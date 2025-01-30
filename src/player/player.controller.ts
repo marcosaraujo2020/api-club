@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { CreatePlayerDto } from 'src/entities/dto/create-player.dto';
+import { PlayerDto } from 'src/entities/dto/player.dto';
 import { PlayerService } from './player.service';
-import { Player } from 'src/entities/player.entity';
-import { Response } from 'express';
-import { PlayerDto } from 'src/entities/player.dto';
 
 @Controller('players')
 export class PlayerController {
@@ -24,8 +23,10 @@ export class PlayerController {
   }
 
   @Post()
-  async createPlayer(@Res() response: Response, @Body() player: Player) {
-    const playerCreated = await this.playerService.createPlayer(player);
-    return response.status(201).json(playerCreated);
+  async createPlayer(
+    @Body() createPlayerDto: CreatePlayerDto,
+  ): Promise<PlayerDto> {
+    const player = await this.playerService.createPlayer(createPlayerDto);
+    return new PlayerDto(player);
   }
 }
