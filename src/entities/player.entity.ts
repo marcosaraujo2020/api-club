@@ -24,7 +24,7 @@ export class Player {
   @Column()
   position: string;
 
-  @ManyToOne(() => Club, (club) => club.players)
+  @ManyToOne(() => Club, (club) => club.players, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'clubId' })
   club: Club;
 }

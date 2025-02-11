@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Delete, Param } from '@nestjs/common';
 import { ClubDto } from 'src/entities/dto/club.dto';
 import { CreateClubDto } from 'src/entities/dto/create-club.dto';
 import { ClubService } from './club.service';
@@ -24,4 +24,10 @@ export class ClubController {
   async createClub(@Body() createClubDto: CreateClubDto) {
     return this.clubService.createClub(createClubDto);
   }
+
+  @Delete(':id')
+  async deleteClub(@Param('id') id: string): Promise<void> {
+    await this.clubService.deleteClub(id);
+  }
+
 }

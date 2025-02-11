@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PlayerService {
+  
   constructor(
     @InjectRepository(Player)
     private readonly playerRepository: Repository<Player>,
@@ -51,4 +52,12 @@ export class PlayerService {
     });
     return this.playerRepository.save(player);
   }
+
+  async deletePlayer(id: string): Promise<void> {
+    const result = await this.playerRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Player com ID ${id} não localizado.`);
+    }
+  }
+
 }

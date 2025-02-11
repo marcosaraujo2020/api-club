@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClubDto } from 'src/entities/dto/club.dto';
 import { Club } from 'src/entities/club.entity';
@@ -7,6 +7,7 @@ import { CreateClubDto } from 'src/entities/dto/create-club.dto';
 
 @Injectable()
 export class ClubService {
+ 
   constructor(
     @InjectRepository(Club)
     private readonly clubsRepository: Repository<Club>,
@@ -21,4 +22,12 @@ export class ClubService {
     const club = this.clubsRepository.create(createClubDto);
     return this.clubsRepository.save(club);
   }
+
+  async deleteClub(id: string): Promise<void> {
+    const result = await this.clubsRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Club com ID ${id} não localizado.`);
+    }
+  }
+
 }
